@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Whack-a-Mole</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Whack-a-Mole</h1>
+        <input type="text" id="name" placeholder="Enter your name">
+        <button onclick="startGame()" id="startButton">Start Game</button>
+        <button onclick="resetScore()" id="resetButton">Reset Score</button>
+        <div class="score-board">
+            Player: <span id="displayName">---</span> |
+            Score: <span id="score">0</span> |
+            Time: <span id="time">20</span>s
+        </div>
+        <div class="grid">
+            <button class="hole" onclick="whack(0)"></button>
+            <button class="hole" onclick="whack(1)"></button>
+            <button class="hole" onclick="whack(2)"></button>
+            <button class="hole" onclick="whack(3)"></button>
+            <button class="hole" onclick="whack(4)"></button>
+            <button class="hole" onclick="whack(5)"></button>
+            <button class="hole" onclick="whack(6)"></button>
+            <button class="hole" onclick="whack(7)"></button>
+            <button class="hole" onclick="whack(8)"></button>
+        </div>
+        <div id="result"></div>
+    </div>
+
+
+</body>
+<script>
+    let score = 0;
+    let time = 20;
+    let current = -1;
+    let timer;
+    let moleTimer;
+
+    const holes = document.querySelectorAll(".hole");
+console.log(holes);
+
+    const startGame = () => {
+        const playername = document.getElementById("name").value;
+
+        if (playername === "") {
+            alert("Please enter your name");
+            return;
+        } else {
+            document.getElementById("displayName").innerHTML = playername;
+            score = 0;
+            time = 20;
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("time").innerHTML = time;
+            document.getElementById("result").innerHTML = "";
+            timer = setInterval(countDown, 1000);
+            moleTimer = setInterval(showMole, 1000);
+
+        }
+
+    }
+
+    function showMole() {
+        holes.forEach(h => h.innerHTML = "");
+        let random = Math.floor(Math.random() * 9);
+        holes[random].innerHTML = '<img src="./assets/mole.png" width="100">';
+        current = random;
+    }
+
+    function whack(index) {
+        if (index === current) {
+            score++;
+            document.getElementById("score").innerHTML = score;
+            holes[index].innerHTML = "";
+            current = -1;
+        }
+    }
+
+    function countDown() {
+        time--;
+        document.getElementById("time").innerHTML = time;
+
+        if (time === 0) {
+            clearInterval(timer);
+            clearInterval(moleTimer);
+
+            holes.forEach(h => h.innerHTML = "");
+
+            if (score >= 5) {
+                document.getElementById("result").innerHTML = "You Won!";
+                alert("Game Over! You Won");
+            } else {
+                document.getElementById("result").innerHTML = "You Lost!";
+                alert("Game Over! You Lost");
+            }
+        }
+    }
+
+    const resetScore = () => {
+        score = 0;
+        document.getElementById("score").innerHTML = score;
+        document.getElementById("result").innerHTML = "";
+        alert("Score Reset Successfully!");
+    }
+</script>
+
+</html>
