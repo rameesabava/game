@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Score Page</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body style="text-align: center;">
+    <h1 class="title">Score Board</h1>
+    <table id="scoreTable">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Score</th>
+                <th>Result</th>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+
+        </tbody>
+    </table>
+          <a href="index.html" class="btn">Back to Home</a>
+
+</body>
+<script>
+    let scores = JSON.parse(sessionStorage.getItem("scores")) || [];
+    let table = document.getElementById("scoreTable");
+    scores.forEach(player => {
+        tableBody.innerHTML+=`
+        <tr>
+    <td>${player.name}</td>
+    <td>${player.score}</td>
+    <td>${player.result}</td>
+</tr>
+        `
+    });
+</script>
+</html>

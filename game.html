@@ -15,24 +15,24 @@
         <button onclick="startGame()" id="startButton">Start Game</button>
         <button onclick="resetScore()" id="resetButton">Reset Score</button>
         <div class="score-board">
-            Player: <span id="displayName">---</span> |
+            Player: <span id="displayName">________</span> |
             Score: <span id="score">0</span> |
             Time: <span id="time">20</span>s
         </div>
         <div class="grid">
-            <button class="hole" onclick="whack(0)"></button>
-            <button class="hole" onclick="whack(1)"></button>
-            <button class="hole" onclick="whack(2)"></button>
-            <button class="hole" onclick="whack(3)"></button>
-            <button class="hole" onclick="whack(4)"></button>
-            <button class="hole" onclick="whack(5)"></button>
-            <button class="hole" onclick="whack(6)"></button>
-            <button class="hole" onclick="whack(7)"></button>
-            <button class="hole" onclick="whack(8)"></button>
+            <button class="hole" onclick="scoreUpdate(0)"></button>
+            <button class="hole" onclick="scoreUpdate(1)"></button>
+            <button class="hole" onclick="scoreUpdate(2)"></button>
+            <button class="hole" onclick="scoreUpdate(3)"></button>
+            <button class="hole" onclick="scoreUpdate(4)"></button>
+            <button class="hole" onclick="scoreUpdate(5)"></button>
+            <button class="hole" onclick="scoreUpdate(6)"></button>
+            <button class="hole" onclick="scoreUpdate(7)"></button>
+            <button class="hole" onclick="scoreUpdate(8)"></button>
         </div>
         <div id="result"></div>
+        <a href="score.html" class="btn">Show Scoreboard</a>
     </div>
-
 
 </body>
 <script>
@@ -43,7 +43,7 @@
     let moleTimer;
 
     const holes = document.querySelectorAll(".hole");
-console.log(holes);
+    //console.log(holes);
 
     const startGame = () => {
         const playername = document.getElementById("name").value;
@@ -52,14 +52,17 @@ console.log(holes);
             alert("Please enter your name");
             return;
         } else {
+             clearInterval(timer);
+    clearInterval(moleTimer);
+    score = 0;
+    time = 20;
+    current = -1;
             document.getElementById("displayName").innerHTML = playername;
-            score = 0;
-            time = 20;
             document.getElementById("score").innerHTML = score;
             document.getElementById("time").innerHTML = time;
             document.getElementById("result").innerHTML = "";
-            timer = setInterval(countDown, 1000);
-            moleTimer = setInterval(showMole, 1000);
+            timer = setInterval(timeChange, 1000);
+            moleTimer = setInterval(showMole, 700);
 
         }
 
@@ -72,7 +75,7 @@ console.log(holes);
         current = random;
     }
 
-    function whack(index) {
+    function scoreUpdate(index) {
         if (index === current) {
             score++;
             document.getElementById("score").innerHTML = score;
@@ -81,26 +84,33 @@ console.log(holes);
         }
     }
 
-    function countDown() {
+    function timeChange() {
         time--;
         document.getElementById("time").innerHTML = time;
-
         if (time === 0) {
             clearInterval(timer);
             clearInterval(moleTimer);
-
             holes.forEach(h => h.innerHTML = "");
-
-            if (score >= 5) {
+            let resultContent=""
+            if (score >= 7) {
+                resultContent = "Won"
                 document.getElementById("result").innerHTML = "You Won!";
                 alert("Game Over! You Won");
             } else {
+                resultContent = "Lost"
                 document.getElementById("result").innerHTML = "You Lost!";
                 alert("Game Over! You Lost");
             }
+            let playerName = document.getElementById("displayName").innerHTML;
+            let scores = JSON.parse(sessionStorage.getItem("scores")) || [];
+            scores.push({ name: playerName, score: score, result: resultContent });
+            sessionStorage.setItem("scores", JSON.stringify(scores));
+            score = 0;
+            time = 20;
+            document.getElementById("score").innerHTML = score;
+            document.getElementById("time").innerHTML = time;
         }
     }
-
     const resetScore = () => {
         score = 0;
         document.getElementById("score").innerHTML = score;
