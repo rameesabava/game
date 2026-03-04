@@ -8,6 +8,9 @@ body {
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 /* Navigation bar */
@@ -139,48 +142,96 @@ a:hover {
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(3, 100px);
+    grid-template-columns: repeat(3, 1fr);
     gap: 10px;
     justify-content: center;
+    max-width: 320px;
+    margin: auto;
 }
 
 .hole {
-    width: 100px;
-    height: 100px;
+    width: 100%;
+    aspect-ratio: 1 / 1;
     background-color: rgb(29, 211, 228);
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
-    font-size: 40px;
 }
 
 /* score page */
 #scoreTable {
-    margin: 40px auto;          
-    border:rgb(29, 211, 228);  
+    margin: 40px auto;
+    border: rgb(29, 211, 228);
     min-width: 400px;
     background-color: rgb(5, 170, 154);
     color: rgb(242, 233, 233);
     border-radius: 10px;
     overflow: hidden;
 }
+
 #scoreTable th,
 #scoreTable td {
     border: 1px solid #333;
     padding: 12px 20px;
     text-align: center;
 }
+
 /* Responsive */
 
 @media (max-width: 768px) {
+
     .navBar {
+        flex-direction: column;
+        padding: 20px;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .links {
         flex-direction: column;
         gap: 15px;
     }
 
+    .para {
+        margin: 60px 20px;
+    }
+
     .para h1 {
-        font-size: 30px;
+        font-size: 28px;
+    }
+
+    .para p {
+        font-size: 16px;
+    }
+
+    .btn {
+        padding: 10px 25px;
+        font-size: 14px;
+    }
+    #name {
+        width: 80%;
+        max-width: 250px;
+    }
+
+    #startButton,
+    #resetButton {
+        width: 80%;
+        max-width: 250px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    #scoreTable {
+        width: 90%;
+        min-width: unset;
+        font-size: 14px;
+    }
+
+    #scoreTable th,
+    #scoreTable td {
+        padding: 8px;
     }
 }

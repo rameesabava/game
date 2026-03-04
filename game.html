@@ -52,11 +52,11 @@
             alert("Please enter your name");
             return;
         } else {
-             clearInterval(timer);
-    clearInterval(moleTimer);
-    score = 0;
-    time = 20;
-    current = -1;
+            clearInterval(timer);
+            clearInterval(moleTimer);
+            score = 0;
+            time = 20;
+            current = -1;
             document.getElementById("displayName").innerHTML = playername;
             document.getElementById("score").innerHTML = score;
             document.getElementById("time").innerHTML = time;
@@ -71,7 +71,7 @@
     function showMole() {
         holes.forEach(h => h.innerHTML = "");
         let random = Math.floor(Math.random() * 9);
-        holes[random].innerHTML = '<img src="./assets/mole.png" width="100">';
+        holes[random].innerHTML = '<img src="./assets/mole.png" style="width:70%; height:auto;">';
         current = random;
     }
 
@@ -91,7 +91,7 @@
             clearInterval(timer);
             clearInterval(moleTimer);
             holes.forEach(h => h.innerHTML = "");
-            let resultContent=""
+            let resultContent = ""
             if (score >= 7) {
                 resultContent = "Won"
                 document.getElementById("result").innerHTML = "You Won!";
