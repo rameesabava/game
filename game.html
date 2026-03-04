@@ -13,7 +13,6 @@
         <h1 class="title">Whack-a-Mole</h1>
         <input type="text" id="name" placeholder="Enter your name">
         <button onclick="startGame()" id="startButton">Start Game</button>
-        <button onclick="resetScore()" id="resetButton">Reset Score</button>
         <div class="score-board">
             Player: <span id="displayName">________</span> |
             Score: <span id="score">0</span> |
@@ -111,12 +110,7 @@
             document.getElementById("time").innerHTML = time;
         }
     }
-    const resetScore = () => {
-        score = 0;
-        document.getElementById("score").innerHTML = score;
-        document.getElementById("result").innerHTML = "";
-        alert("Score Reset Successfully!");
-    }
+    
 </script>
 
 </html>
